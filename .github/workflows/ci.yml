@@ -6,7 +6,7 @@ on:
 
 jobs:
   example-5-1:
-    name: Ex5 Miniforge for PyPy
+    name: Ex5 Miniforge for PyPy, setup-miniconda@v2
     runs-on: "self-hosted"
     defaults:
       run:
@@ -25,14 +25,33 @@ jobs:
           conda config --show-sources
           conda config --show
   example-5-2:
-    name: Ex5 Miniforge for PyPy
+    name: Ex5 Miniforge for PyPy, setup-miniconda@develop
     runs-on: "self-hosted"
     defaults:
       run:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
+      - uses: conda-incubator/setup-miniconda@develop
+        with:
+          installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
+          allow-softlinks: true
+          show-channel-urls: true
+          use-only-tar-bz2: true
+      - run: |
+          conda info
+          conda list
+          conda config --show-sources
+          conda config --show
+  example-5-3:
+    name: Ex5 Miniforge for PyPy, AndreasAlbertQC/setup-miniconda
+    runs-on: "self-hosted"
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: AndreasAlbertQC/setup-miniconda@2022-05-19_fix_installer_cache_develop
         with:
           installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
           allow-softlinks: true
